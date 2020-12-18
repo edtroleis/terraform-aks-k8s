@@ -1,0 +1,13 @@
+stages:
+  - inspection
+
+docker_best_practice:
+  image: edtroleis/terraform:0.1
+  stage: inspection
+  script:
+    - dir=$(pwd); cd ..
+    - find $dir -type f \( -name "*.tf" -o -name "*.tfvars" \) -exec tflint {} \;
+    - echo "Terraform lint"
+  only:
+    - branches
+    - tags
